@@ -1,0 +1,1 @@
+[25-Mar-2020 07:27:01 UTC] PHP Parse error:  syntax error, unexpected ''App\Console\Commands\MonthlyS' (T_CONSTANT_ENCAPSED_STRING), expecting ']' in /home/myprofession/public_html/app/Console/Kernel.php on line 17

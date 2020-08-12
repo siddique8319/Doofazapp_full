@@ -1,0 +1,87 @@
+<template>
+    <div class="row" data-toggle="isotope">
+              <div class="item col-xs-12 col-md-10" >
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                     <h3 class="text-h1 ribbon-heading ribbon-primary bottom-left-right">Change Password</h3>   
+                     <form @submit.prevent="add" >                        
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="exampleFormControlInput1">Old Password</label>
+                              <input  id="exampleFormControlInput1" placeholder="Old Password"  v-model="form.shopTypeName" type="text" name="shopTypeName" :class="{ 'is-invalid': form.errors.has('shopTypeName') }" class="form-control" >
+                               <has-error :form="form" field="shopTypeName"></has-error> 
+                            </div>                             
+                          </div>
+                        </div>
+                           <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="exampleFormControlInput1">New password</label>
+                              <input  id="exampleFormControlInput1" placeholder="New Password"  v-model="form.shopTypeName" type="text" name="shopTypeName" :class="{ 'is-invalid': form.errors.has('shopTypeName') }" class="form-control" >
+                               <has-error :form="form" field="shopTypeName"></has-error> 
+                            </div>                             
+                          </div>
+                        </div>
+                         <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="exampleFormControlInput1">Confirm Password</label>
+                              <input  id="exampleFormControlInput1" placeholder="Confirm Password"  v-model="form.shopCondition" type="text" name="shopCondition" :class="{ 'is-invalid': form.errors.has('shopCondition') }" class="form-control" >
+                               <has-error :form="form" field="shopCondition"></has-error> 
+                            </div>                             
+                          </div>
+                        </div>
+                         <button :disabled="form.busy" type="submit" class=" btn btn-primary">Submit</button>
+                      </form>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+</template>
+
+<script>
+
+    export default {
+        data(){
+        return {
+          form: new Form({
+          shopTypeCode:'',
+          shopTypeName:'',
+          shopCondition:''
+            })  ,
+          conditions:[],      
+        }
+    },
+     mounted() {
+          this.condition();     
+     },
+    methods: {
+        add(){
+           this.form.post('/shopTypeCondition').then(response => {
+              this.form.reset(); 
+              this.condition(); 
+              Toast.fire({
+                      icon: 'success',
+                      title: 'Successfully Saved'
+                });        
+           })         
+        },
+        condition(){
+            axios.get('/shopTypeCondition').then(res =>{
+                 this.conditions = res.data.condition;
+              })
+         },    
+        deletePost(shopTypeConditionId){
+          axios.delete(`/shopTypeCondition/${shopTypeConditionId}`).then(response => {
+              Toast.fire({
+                icon: 'success',
+                title: 'Successfully Deleted'
+              });   
+            this.condition();         
+          });       
+       },    
+    }
+  }
+</script>
